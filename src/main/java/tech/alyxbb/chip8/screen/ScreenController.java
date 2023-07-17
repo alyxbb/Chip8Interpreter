@@ -16,7 +16,7 @@ public class ScreenController {
             if(currentY>=Display.HEIGHT){
                 break;
             }
-            int mask = 0b10000000;
+            int mask = 0b1000_0000;
             for (byte currentX = x; currentX < x+8; currentX++) {
                 if (currentX>=Display.WIDTH){
                     break;

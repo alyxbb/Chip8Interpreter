@@ -27,30 +27,31 @@ public class Interpreter {
             registers[i]=new Register();    
         }
         
-        pc.setValue(0x200);
+        pc.setValue(Memory.PROGRAM_LOCATION);
     }
     private void run(){
         while(true){
         int instruction = Short.toUnsignedInt(fetch());
-        short subInst = (short) (instruction&0xFFF);
-        byte nibble2 =(byte) (subInst>>>8);
-        byte nibble3 = (byte) ((subInst>>>4)&0xF);
-        byte nibble4 = (byte) (subInst&0xF);
-        byte endByte = (byte) (subInst&0xFF);
-            switch (instruction >>> 12) {
+        short last3Nibbles = (short) (instruction&0xFFF);
+        byte nibble1 = (byte) (instruction>>>12);
+        byte nibble2 = (byte) (last3Nibbles>>>8);
+        byte nibble3 = (byte) ((last3Nibbles>>>4)&0xF);
+        byte nibble4 = (byte) (last3Nibbles&0xF);
+        byte endByte = (byte) (last3Nibbles&0xFF);
+            switch (nibble1) {
                 case 0x0 -> {
-                    if (subInst == 0x0E0) { // clear screen
+                    if (last3Nibbles == 0x0E0) { // clear screen
                         screenController.clearScreen();
                     }
                 }
                 case 0x1 -> // jump
-                        pc.setValue(subInst);
+                        pc.setValue(last3Nibbles);
                 case 0x6 -> // set
                         registers[nibble2].setValue(endByte);
                 case 0x7 -> // add
                         registers[nibble2].setValue(registers[nibble2].getValue() + endByte);
                 case 0xA -> // set index
-                        iReg.setValue(subInst);
+                        iReg.setValue(last3Nibbles);
                 case 0xD -> { // display
                     byte x = (byte) (registers[nibble2].getShortValue() % Display.WIDTH);
                     byte y = (byte) (registers[nibble3].getShortValue() % Display.HEIGHT);
