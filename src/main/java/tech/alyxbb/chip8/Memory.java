@@ -6,6 +6,17 @@ import java.io.IOException;
 public class Memory {
     byte[] memory = new byte[0x1000];
 
+    public byte getValue(int position){
+        return memory[position];
+    }
+    public void setValue(int position,byte value){
+        memory[position]=value;
+    }
+    public short getShort(int poistion){
+        return (short)((memory[poistion]<<8)|(Byte.toUnsignedInt(memory[poistion+1])));
+    }
+    
+    
     public Memory(String fileLocation) {
         loadFile(fileLocation);
         loadFont();

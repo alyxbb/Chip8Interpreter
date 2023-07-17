@@ -12,7 +12,7 @@ public class Register {
     public void setValue(byte value){
         this.value = value;
     }
-    public void setValue(short value){
+    public void setValue(int value){
         this.value = (byte) value;
     }
 }
