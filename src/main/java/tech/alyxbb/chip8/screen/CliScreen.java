@@ -8,19 +8,21 @@ public class CliScreen implements ScreenFacade {
     private static final String CLEAR_FORMATTING = "\033[0m";
     @Override
     public void render(boolean[][] pixels) {
-        System.out.print(CLEAR_SCREEN);
+        StringBuilder toPrint = new StringBuilder();
+        toPrint.append(CLEAR_SCREEN);
         for (boolean[] row: pixels
              ) {
             for (boolean pixel:row
                  ) {
                 if (pixel){
-                    System.out.print(WHITE_BG + " ");
+                    toPrint.append(WHITE_BG + " ");
                 }else {
-                    System.out.print(BLACK_BG + " ");
+                    toPrint.append(BLACK_BG + " ");
                 }
             }
-            System.out.println(CLEAR_FORMATTING);
+            toPrint.append(CLEAR_FORMATTING + "\n");
         }
+        System.out.println(toPrint.toString());
     }
 
 
