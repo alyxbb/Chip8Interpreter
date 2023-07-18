@@ -25,6 +25,7 @@ public class Memory {
             0xF0, 0x80, 0xF0, 0x80, 0xF0, // E
             0xF0, 0x80, 0xF0, 0x80, 0x80  // F
     };
+    public static final int FONT_HEIGHT = FONT.length/16;
     
     
     byte[] memory = new byte[MEMORY_SIZE];
